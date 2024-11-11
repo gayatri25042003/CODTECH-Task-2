@@ -27,9 +27,9 @@ Objective
 5. Improve Security Awareness: Provide insight to developers and stakeholders on common security flaws and how to fix them to build more secure applications.
 
 
-   Key Activities: 
-
-   1. Information Gathering (Reconnaissance):
+   Key Activities:
+   
+ 1. Information Gathering (Reconnaissance):
 
 Collect details about the application, such as domain names, URLs, server details, and technologies used (e.g., CMS, databases).
 
