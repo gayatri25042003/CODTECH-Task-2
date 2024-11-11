@@ -27,7 +27,7 @@ Objective
 5. Improve Security Awareness: Provide insight to developers and stakeholders on common security flaws and how to fix them to build more secure applications.
 
 
-   Key Activities:
+ Key Activities:
    
  1. Information Gathering (Reconnaissance):
 
